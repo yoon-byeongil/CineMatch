@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0C9E10052F989A7D00F90A19 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E10042F989A7D00F90A19 /* Movie.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0C9E0FD82F9866A300F90A19 /* CineMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C9E10042F989A7D00F90A19 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,6 +90,7 @@
 		0C9E0FF32F98718E00F90A19 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0C9E10042F989A7D00F90A19 /* Movie.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -255,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C9E10052F989A7D00F90A19 /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
