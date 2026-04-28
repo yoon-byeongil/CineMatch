@@ -11,18 +11,43 @@ struct MovieCardView: View {
     let title: String
     let year: String
     let rating: Double
-    let posterPath: String? // 나중에 교체
+    let posterPath: String?
+    
+    var posterURL: URL? {
+        guard let path = posterPath else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/w500" + path)
+    }
     
     var body: some View {
-        //임시 포스터 자리
+
         HStack(spacing: 12) {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 80, height: 120)
-                .overlay(
-                    Image(systemName: "film")
-                        .foregroundColor(.gray)
-                )
+            AsyncImage(url: posterURL) { phase in
+                switch phase {
+                case .empty: //로딩
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.gray.opacity(0.3))
+                        .overlay(
+                            ProgressView()
+                                .tint(.gray)
+                        )
+                case .success(let image): // 성공
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .cornerRadius(8)
+                case .failure: // 실패
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.gray.opacity(0.3))
+                        .overlay(
+                            Image(systemName: "film")
+                                .foregroundColor(.gray)
+                        )
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 80, height: 120)
+            .clipped()
             
             // 영화 정보
             VStack(alignment: .leading, spacing: 8) {
@@ -57,11 +82,22 @@ struct MovieCardView: View {
 }
 
 #Preview {
-    MovieCardView(
-        title: "千と千尋の神隠し",
-        year: "2001年",
-        rating: 8.6,
-        posterPath: nil
-    )
+    VStack(spacing: 12) {
+        // 포스터 없는 경우
+        MovieCardView(
+            title: "千と千尋の神隠し",
+            year: "2001年",
+            rating: 8.6,
+            posterPath: nil
+        )
+        // 실제 TMDB 포스터 테스트
+        MovieCardView(
+            title: "となりのトトロ",
+            year: "1988年",
+            rating: 8.2,
+            posterPath: "/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg"
+        )
+    }
+    .padding()
     .preferredColorScheme(.dark)
 }
