@@ -12,14 +12,23 @@ struct MovieCardView: View {
     let year: String
     let rating: Double
     let posterPath: String?
+    let genres: [String]
     
     var posterURL: URL? {
         guard let path = posterPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500" + path)
     }
     
+    var ratingColor: Color {
+        switch rating {
+        case 8.0...: return .green
+        case 6.0..<8.0: return .yellow
+        default: return .red
+        }
+    }
+    
     var body: some View {
-
+        
         HStack(spacing: 12) {
             AsyncImage(url: posterURL) { phase in
                 switch phase {
@@ -55,10 +64,24 @@ struct MovieCardView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
                     .lineLimit(2)  // 최대 2줄
-
+                
                 Text(year)
                     .font(.caption)
                     .foregroundColor(.gray)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        ForEach(genres, id: \.self) { genre in
+                            Text(genre)
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundColor(.white.opacity(0.8))
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.white.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                    }
+                }
                 
                 HStack(spacing: 4) {
                     Image(systemName: "star.fill")
@@ -66,7 +89,8 @@ struct MovieCardView: View {
                         .font(.caption)
                     Text(String(format: "%.1f", rating))
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(ratingColor)
+                        .fontWeight(.semibold)
                 }
                 
                 Spacer()
@@ -83,19 +107,26 @@ struct MovieCardView: View {
 
 #Preview {
     VStack(spacing: 12) {
-        // 포스터 없는 경우
         MovieCardView(
             title: "千と千尋の神隠し",
             year: "2001年",
             rating: 8.6,
-            posterPath: nil
+            posterPath: nil,
+            genres: ["アニメーション", "ファンタジー"]
         )
-        // 실제 TMDB 포스터 테스트
         MovieCardView(
             title: "となりのトトロ",
             year: "1988年",
-            rating: 8.2,
-            posterPath: "/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg"
+            rating: 7.2,
+            posterPath: nil,
+            genres: ["アニメーション", "ファミリー"]
+        )
+        MovieCardView(
+            title: "テスト映画",
+            year: "2024年",
+            rating: 5.5,
+            posterPath: nil,
+            genres: ["ドラマ"]
         )
     }
     .padding()

@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    let sampleMovies: [(title: String, year: String, rating: Double)] = [
-        ("千と千尋の神隠し", "2001年", 8.6),
-        ("となりのトトロ",   "1988年", 8.2),
-        ("もののけ姫",       "1997年", 8.4),
-        ("風の谷のナウシカ", "1984年", 8.1),
-        ("ハウルの動く城",   "2004年", 7.9)
+    let sampleMovies: [(title: String, year: String, rating: Double, genres: [String])] = [
+        ("千と千尋の神隠し", "2001年", 8.6, ["アニメーション", "ファンタジー"]),
+        ("となりのトトロ",   "1988年", 8.2, ["アニメーション", "ファミリー"]),
+        ("もののけ姫",       "1997年", 8.4, ["アニメーション", "アドベンチャー"]),
+        ("風の谷のナウシカ", "1984年", 8.1, ["アニメーション", "SF"]),
+        ("ハウルの動く城",   "2004年", 7.9, ["アニメーション", "ロマンス"])
     ]
 
     var body: some View {
@@ -48,7 +48,8 @@ struct HomeView: View {
                                         title: movie.title,
                                         year: movie.year,
                                         rating: movie.rating,
-                                        posterPath: nil
+                                        posterPath: nil,
+                                        genres: movie.genres
                                     )
                                 }
                             }
