@@ -1,6 +1,13 @@
 import SwiftUI
 
 struct HomeView: View {
+    var todayString: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.locale = Locale(identifier: "ja_JP")
+        return formatter.string(from: Date())
+    }
+    
     let sampleMovies: [(title: String, year: String, rating: Double, genres: [String])] = [
         ("千と千尋の神隠し", "2001年", 8.6, ["アニメーション", "ファンタジー"]),
         ("となりのトトロ",   "1988年", 8.2, ["アニメーション", "ファミリー"]),
@@ -23,9 +30,11 @@ struct HomeView: View {
                                 .font(.system(size: 28, weight: .bold))
                                 .foregroundColor(.white)
                             Text("現在公開中")
-                            
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
+                            Text(todayString)
+                                .font(.caption)
+                                .foregroundColor(.gray.opacity(0.6))
                         }
                         Spacer()
                     }
